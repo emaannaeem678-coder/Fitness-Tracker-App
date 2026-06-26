@@ -1,0 +1,213 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Fitness App</title>
+
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin:0;
+            padding:0;
+        }
+
+        .container{
+            width: 60%;
+            margin: 30px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+        }
+
+        h1{
+            text-align:center;
+            color:#333;
+        }
+
+        .menu{
+            margin-top:20px;
+        }
+
+        .menu button{
+            width:100%;
+            padding:15px;
+            margin:10px 0;
+            border:none;
+            border-radius:5px;
+            background-color:#28a745;
+            color:white;
+            font-size:16px;
+            cursor:pointer;
+        }
+
+        .menu button:hover{
+            background-color:#218838;
+        }
+
+        .section{
+            display:none;
+            margin-top:20px;
+        }
+
+        input{
+            width:100%;
+            padding:10px;
+            margin:10px 0;
+            border:1px solid #ccc;
+            border-radius:5px;
+        }
+
+        .result{
+            margin-top:20px;
+            padding:15px;
+            background:#e9ecef;
+            border-radius:5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>WELCOME TO MY FITNESS</h1>
+
+    <div class="menu">
+        <button onclick="showSection('dataEntry')">1. Enter Data</button>
+        <button onclick="showSection('activityLog')">2. Log Activities</button>
+        <button onclick="calculateCalories()">3. View Calories</button>
+        <button onclick="showAchievement()">4. View Achievement</button>
+    </div>
+
+    <!-- Data Entry -->
+    <div id="dataEntry" class="section">
+        <h2>Enter Weight & Height</h2>
+
+        <input type="number" id="weight" placeholder="Enter Weight (kg)">
+        <input type="number" id="height" placeholder="Enter Height (cm)">
+
+        <button onclick="saveData()">Save Data</button>
+
+        <div id="dataResult" class="result"></div>
+    </div>
+
+    <!-- Activity Logging -->
+    <div id="activityLog" class="section">
+        <h2>Log Activities</h2>
+
+        <input type="number" id="walk" placeholder="Walking Duration (min)">
+        <input type="number" id="run" placeholder="Running Duration (min)">
+        <input type="number" id="cycle" placeholder="Cycling Duration (min)">
+        <input type="number" id="jog" placeholder="Jogging Duration (min)">
+        <input type="number" id="skip" placeholder="Skipping Duration (min)">
+
+        <button onclick="saveActivities()">Save Activities</button>
+
+        <div id="activityResult" class="result"></div>
+    </div>
+
+    <!-- Calories -->
+    <div id="caloriesSection" class="section">
+        <h2>Calories Burned</h2>
+
+        <div id="calorieResult" class="result"></div>
+    </div>
+
+    <!-- Achievement -->
+    <div id="achievementSection" class="section">
+        <h2>Today's Achievement</h2>
+
+        <div id="achievementResult" class="result"></div>
+    </div>
+
+</div>
+
+<script>
+
+    let weight = 0;
+    let height = 0;
+
+    let walk = 0;
+    let run = 0;
+    let cycle = 0;
+    let jog = 0;
+    let skip = 0;
+
+    let grandTotal = 0;
+
+    function showSection(sectionId){
+
+        let sections = document.getElementsByClassName("section");
+
+        for(let i=0; i<sections.length; i++){
+            sections[i].style.display = "none";
+        }
+
+        document.getElementById(sectionId).style.display = "block";
+    }
+
+    function saveData(){
+
+        weight = document.getElementById("weight").value;
+        height = document.getElementById("height").value;
+
+        document.getElementById("dataResult").innerHTML =
+            "Your Weight is <b>" + weight +
+            " kg</b> and Height is <b>" + height + " cm</b>";
+    }
+
+    function saveActivities(){
+
+        walk = parseFloat(document.getElementById("walk").value) || 0;
+        run = parseFloat(document.getElementById("run").value) || 0;
+        cycle = parseFloat(document.getElementById("cycle").value) || 0;
+        jog = parseFloat(document.getElementById("jog").value) || 0;
+        skip = parseFloat(document.getElementById("skip").value) || 0;
+
+        document.getElementById("activityResult").innerHTML =
+            "Activities Saved Successfully!";
+    }
+
+    function calculateCalories(){
+
+        showSection("caloriesSection");
+
+        let walkCal = walk * 4;
+        let runCal = run * 11.5;
+        let cycleCal = cycle * 10;
+        let jogCal = jog * 11.4;
+        let skipCal = skip * 20;
+
+        grandTotal = walkCal + runCal + cycleCal + jogCal + skipCal;
+
+        document.getElementById("calorieResult").innerHTML =
+
+            "<p>Walking Calories: " + walkCal + "</p>" +
+            "<p>Running Calories: " + runCal + "</p>" +
+            "<p>Cycling Calories: " + cycleCal + "</p>" +
+            "<p>Jogging Calories: " + jogCal + "</p>" +
+            "<p>Skipping Calories: " + skipCal + "</p>" +
+            "<hr>" +
+            "<h3>Total Calories Burned: " + grandTotal + "</h3>";
+    }
+
+    function showAchievement(){
+
+        showSection("achievementSection");
+
+        document.getElementById("achievementResult").innerHTML =
+
+            "<p>Your Weight: <b>" + weight + " kg</b></p>" +
+            "<p>Your Height: <b>" + height + " cm</b></p>" +
+            "<p>Total Calories Burned Today: <b>" + grandTotal + "</b></p>";
+    }
+
+</script>
+
+</body>
+</html>
+```
